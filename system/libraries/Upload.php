@@ -1103,7 +1103,7 @@ class CI_Upload {
 				}
 			}
 
-			$memory_limit = (int) ceil(filesize($file) + $memory_limit);
+			$memory_limit = (int) ceil(filesize($file) + $memory_limit[0]);
 			ini_set('memory_limit', $memory_limit); // When an integer is used, the value is measured in bytes. - PHP.net
 		}
 
