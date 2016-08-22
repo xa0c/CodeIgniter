@@ -6,7 +6,7 @@ class Encrypt_test extends CI_TestCase {
 
 	public function set_up()
 	{
-		if ( ! extension_loaded('mcrypt'))
+		if ( ! extension_loaded('mcrypt') OR version_compare(PHP_VERSION, '7.1.0-alpha', '>='))
 		{
 			return;
 		}

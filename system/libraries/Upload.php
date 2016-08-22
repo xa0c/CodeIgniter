@@ -1083,9 +1083,26 @@ class CI_Upload {
 			return FALSE;
 		}
 
-		if (memory_get_usage() && ($memory_limit = ini_get('memory_limit')))
+		if (memory_get_usage() && ($memory_limit = ini_get('memory_limit')) > 0)
 		{
-			$memory_limit *= 1024 * 1024;
+			$memory_limit = str_split($memory_limit, strspn($memory_limit, '1234567890'));
+			if ( ! empty($memory_limit[1]))
+			{
+				switch ($memory_limit[1][0])
+				{
+					case 'g':
+					case 'G':
+						$memory_limit[0] *= 1024 * 1024 * 1024;
+						break;
+					case 'm':
+					case 'M':
+						$memory_limit[0] *= 1024 * 1024;
+						break;
+					default:
+						break;
+				}
+			}
+
 			$memory_limit = (int) ceil(filesize($file) + $memory_limit);
 			ini_set('memory_limit', $memory_limit); // When an integer is used, the value is measured in bytes. - PHP.net
 		}
